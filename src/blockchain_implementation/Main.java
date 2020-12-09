@@ -1,53 +1,38 @@
 package blockchain_implementation;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		
+		
+		
+		Block genesisBlock = new Block("00000","00000","5251580113c5506bc491a6d5b789bh71a86eb7b2ad8e1df7761fcfc676284fb5","nesto",0);
+		Blockchain blockchain= new Blockchain();
+		blockchain.addToBlockchain(genesisBlock);
 		
 		Transaction transaction1 = new Transaction("Marko", "Ivan", "240");
-		System.out.println(transaction1);
-		ArrayList<Block> blockChain = new ArrayList<Block>();
-		
-		Block genesis = new Block(transaction1, 0);
-		blockChain.add(genesis);
-		System.out.println();
-		
 		Transaction transaction2 = new Transaction("Maja", "Marina", "1240");
-		int previousHash = genesis.getCurrentHash();
-		Block second = new Block(transaction2,previousHash);
-		blockChain.add(second);
-		
 		Transaction transaction3 = new Transaction("Ivo", "Zoki", "12");
-		//int previousHash2 = second.getCurrentHash();
-		int previousHash2 = 3;
-		Block third = new Block(transaction3,previousHash2);
-		blockChain.add(third);
+		Transaction transaction4 = new Transaction("Leo", "Lola", "1312");
 		
-		System.out.println(blockChain);
-		System.out.println(validate(blockChain));
+		ArrayList<Transaction> transactionPool= new ArrayList<Transaction>();
+		transactionPool.add(transaction1);
+		transactionPool.add(transaction2);
+		transactionPool.add(transaction3);
+		transactionPool.add(transaction4);
+		
+		Miner.mine(transactionPool,"ffdsad"); //hash with this nonce doesn't start with 1
+		System.out.println(Blockchain.getBlockchainSize());
+		Miner.mine(transactionPool,"ffdsads"); //hash with this nonce does start with 1 => block mined
+
 		
 	}
 	
-	static boolean validate(ArrayList<Block> blockChain) {
-		int n = blockChain.size();
-		Block current;
-		Block next;
-		for(int i= 0 ;i<n;i++) {
-			if(i==n-1) {
-				break;
-			}
-			current = blockChain.get(i);
-			next = blockChain.get(i+1);
-			if(current.getCurrentHash()!=next.getPreviousHash()) {
-				return false;
-				
-			}
-		}
-		return true;
-	}
+
 
 }

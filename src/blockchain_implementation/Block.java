@@ -4,44 +4,53 @@ import java.util.Arrays;
 
 public class Block {
 	
-	private Transaction transaction;
-	private int previousHash;
-	private int currentHash;
-	
-	public Block(Transaction transaction, int previousHash) {
-		this.transaction = transaction;
-		this.previousHash = previousHash;
-		this.currentHash = calculateCurrentHash(transaction,previousHash);
-	}
-	
-	private int calculateCurrentHash(Transaction transaction, int previousHash) {
-		return currentHash = Arrays.hashCode(new Integer[] {transaction.hashCode(),previousHash});
-	}
-
-	@Override
-	public String toString() {
-		return "Block [transaction=" + transaction + ", previousHash=" + previousHash + ", currentHash=" + currentHash
-				+ "]";
-	}
-
-	public int getPreviousHash() {
-		return previousHash;
-	}
-
-	public void setPreviousHash(int previousHash) {
-		this.previousHash = previousHash;
-	}
-
-	public int getCurrentHash() {
-		return currentHash;
-	}
-
-	public void setCurrentHash(int currentHash) {
-		this.currentHash = currentHash;
-	}
+	private String blockHash;
+	private String merkleRootHash;
+	private String previousBlockHash;
+	private String nonce;
+	private int difficulty; //if difficulty==1, block is considered mined if hash starts with 1
 	
 	
 	
- 
+	public Block(String blockHash, String merkleRootHash, String previousBlockHash, String nonce, int difficulty) {
+		this.blockHash = blockHash;
+		this.merkleRootHash = merkleRootHash;
+		this.previousBlockHash = previousBlockHash;
+		this.nonce = nonce;
+		this.difficulty = difficulty;
+	}
+
+
+
+	public String getBlockHash() {
+		return blockHash;
+	}
+
+
+
+	public String getMerkleRootHash() {
+		return merkleRootHash;
+	}
+
+
+
+	public String getPreviousBlockHash() {
+		return previousBlockHash;
+	}
+
+
+
+	public String getNonce() {
+		return nonce;
+	}
+
+
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+
+
 	
 }
